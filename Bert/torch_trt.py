@@ -46,21 +46,21 @@ if __name__ == "__main__" :
    
     jit_model = torch.jit.script(model)
     sumtime = 0
-    for i in range(100) :
-        if i>=50:
+    for i in range(10) :
+        if i>=5:
             since= time.time()
         out =  jit_model.forward(inputs, mask)
-        if i>=50:
+        if i>=5:
             sumtime += time.time() - since
         torch.cuda.synchronize()
     print("average runtime per iter for NVFUSER:", round(sumtime*1000.0/50.0,2), 'ms')
     trt_ts_module = torch_tensorrt.compile(jit_model,inputs=[inputs, mask],  enabled_precisions = {torch.float})
     sumtime = 0
-    for i in range(100):
-        if i>=50:
+    for i in range(10):
+        if i>=5:
             since= time.time()
         out =  trt_ts_module(inputs, mask)
-        if i>=50:
+        if i>=5:
             sumtime += time.time() - since
         torch.cuda.synchronize()
     print("average runtime per iter for TORCH-TRT:", round(sumtime*1000.0/50.0,2), 'ms')
