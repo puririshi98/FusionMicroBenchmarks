@@ -32,8 +32,8 @@ class Fusion(nn.Module):
         out1 = inputs / math.sqrt(self.attention_head_size)
         out2 = out1 + mask
         out3 = F.softmax(out2, dim=-1)
-        out4 = self.dropout(out3)
-        return out4
+#         out4 = self.dropout(out3)
+        return out3
 
 if __name__ == "__main__" :
     inputs = torch.randn(256, 16, 128, 128, device="cuda", dtype=torch.float, requires_grad=True)
