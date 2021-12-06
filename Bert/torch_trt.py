@@ -55,6 +55,7 @@ if __name__ == "__main__" :
             sumtime += time.time() - since
 
     print("average runtime per iter for NVFUSER:", round(sumtime*1000.0/50.0,2), 'ms')
+    jit_model = torch.jit.script(model)
     trt_ts_module = torch_tensorrt.compile(jit_model,inputs=[inputs, mask],  enabled_precisions = {torch.float})
     sumtime = 0
     for i in range(10):
